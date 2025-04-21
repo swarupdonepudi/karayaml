@@ -29,7 +29,12 @@ func init() {
 		}
 	})
 
-	rootCmd.AddCommand(root.Version)
+	rootCmd.AddCommand(
+		root.Edit,
+		root.Init,
+		root.List,
+		root.Version,
+	)
 }
 
 func Execute() {
