@@ -10,11 +10,10 @@ import (
 )
 
 var debug bool
-var traceApiRequests bool
 
 var rootCmd = &cobra.Command{
 	Use:   "karayaml",
-	Short: "yaml interface for karabiner-elements",
+	Short: "YAML‑powered shortcut launcher for Karabiner‑Elements on macOS",
 }
 
 func init() {
