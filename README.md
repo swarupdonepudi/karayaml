@@ -15,6 +15,7 @@ Define your shortcuts once, run a command, and Karabiner‑Elements reloads with
 * **One‑command editing** – `karayaml edit` opens the file in VS Code (or `$EDITOR`) and validates duplicates
 * **Safe init** – `karayaml init` generates a working Karabiner config if you do not have one
 * **Pretty list view** – `karayaml list` prints a clean table of your mappings
+* **Add on the fly** – `karayaml add --key k --file /Applications/Slack.app` appends a new shortcut and reloads
 * **Simple Go binary** – no dependencies beyond `go 1.24+`
 
 ---
@@ -36,7 +37,9 @@ brew install swarupdonepudi/tap/karayaml
 karayaml init
 
 # 2. Create or edit your YAML shortcuts
-karayaml edit      # opens ~/.karayaml/shortcuts.yaml in VS Code
+karayaml edit                # opens ~/.karayaml/shortcuts.yaml in VS Code
+#   – or –
+karayaml add --key a --file /Applications/Slack.app
 
 # 3. Reload Karabiner automatically (done by karayaml)
 # 4. Profit – Caps Lock + <key> now launches your apps
@@ -47,31 +50,32 @@ karayaml edit      # opens ~/.karayaml/shortcuts.yaml in VS Code
 ## YAML schema
 
 ```yaml
-- key: a                  # single character or 0‑9
-  app_file_path: /Applications/Slack.app
+- key: a                  # single character or 0-9
+  file: /Applications/Slack.app
 - key: 1
-  app_file_path: /System/Applications/Calendar.app
+  file: /System/Applications/Calendar.app
 ```
 
-`key`        Single alphanumeric key (a‑z or 0‑9).  
-`app_file_path` Absolute path to a macOS `.app` bundle.
+`key`   Single alphanumeric key (a‑z or 0‑9).  
+`file`  Absolute path to a macOS `.app` bundle.
 
 ---
 
 ## Commands
 
-| Command            | Description                                                                                              |
-|--------------------|----------------------------------------------------------------------------------------------------------|
-| `karayaml init`    | Generate a default `~/.config/karabiner/karabiner.json` with Hyper‑key and arrow helpers.                |
-| `karayaml edit`    | Open `~/.karayaml/shortcuts.yaml` in VS Code (or set `$EDITOR`). Prevents duplicate keys before closing. |
-| `karayaml list`    | Print a table of current shortcuts.                                                                      |
-| `karayaml version` | Show the CLI version.                                                                                    |
+| Command            | Description                                                                                             |
+|--------------------|---------------------------------------------------------------------------------------------------------|
+| `karayaml init`    | Generate a default `~/.config/karabiner/karabiner.json` with Hyper‑key and arrow helpers.               |
+| `karayaml edit`    | Open `~/.karayaml/shortcuts.yaml` in VS Code (or set `$EDITOR`). Prevent duplicate keys before closing. |
+| `karayaml add`     | Add a single shortcut from the CLI (e.g. `--key a --file /Applications/Slack.app`).                     |
+| `karayaml list`    | Print a table of current shortcuts.                                                                     |
+| `karayaml version` | Show the CLI version.                                                                                   |
 
 ---
 
 ## How it works
 
-1. **Edit** – You maintain a single YAML file under `~/.karayaml/shortcuts.yaml`.
+1. **Edit** – You maintain a single YAML file under `~/.karayaml/shortcuts.yaml` (or add shortcuts via CLI).
 2. **Transform** – KaraYAML converts each entry into a Karabiner “complex modification” rule that listens for **Caps
    Lock + <Key>**.
 3. **Reload** – The CLI writes to `~/.config/karabiner/karabiner.json`; Karabiner auto‑detects the change and reloads in
