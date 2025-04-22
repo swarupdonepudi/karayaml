@@ -2,9 +2,9 @@ package shortcuts
 
 type KeyBoardKey string
 
-type AppShortcut struct {
-	Key         KeyBoardKey `yaml:"key" json:"key"`
-	AppFilePath string      `yaml:"app_file_path" json:"app_file_path"`
+type FileOpenShortcut struct {
+	Key  KeyBoardKey `yaml:"key" json:"key"`
+	File string      `yaml:"file" json:"file"`
 }
 
 const (

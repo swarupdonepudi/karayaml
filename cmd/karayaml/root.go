@@ -17,7 +17,7 @@ var rootCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.PersistentFlags().BoolVar(&debug, string("debug"), false, "set log level to debug")
+	rootCmd.PersistentFlags().BoolVar(&debug, "debug", false, "set log level to debug")
 
 	rootCmd.CompletionOptions.DisableDefaultCmd = true
 	rootCmd.DisableSuggestions = true
@@ -29,6 +29,7 @@ func init() {
 	})
 
 	rootCmd.AddCommand(
+		root.Add,
 		root.Edit,
 		root.Init,
 		root.List,

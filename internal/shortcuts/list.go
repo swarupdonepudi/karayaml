@@ -8,7 +8,7 @@ import (
 )
 
 // List returns a map of keyboard shortcuts
-func List() (map[KeyBoardKey]*AppShortcut, error) {
+func List() (map[KeyBoardKey]*FileOpenShortcut, error) {
 	shortcuts, err := load()
 	if err != nil {
 		return nil, errors.Wrapf(err, "failed to get keyboard shortcuts")
@@ -17,7 +17,7 @@ func List() (map[KeyBoardKey]*AppShortcut, error) {
 }
 
 // PrintList prints the provided shortcuts map to the console
-func PrintList(shortcuts map[KeyBoardKey]*AppShortcut) {
+func PrintList(shortcuts map[KeyBoardKey]*FileOpenShortcut) {
 	header := table.Row{"key", "app path"}
 	rows := make([]table.Row, 0)
 	hotkeys := make([]string, 0)
@@ -26,7 +26,7 @@ func PrintList(shortcuts map[KeyBoardKey]*AppShortcut) {
 	}
 	sort.Strings(hotkeys)
 	for _, r := range hotkeys {
-		rows = append(rows, table.Row{shortcuts[KeyBoardKey(r)].Key, shortcuts[KeyBoardKey(r)].AppFilePath})
+		rows = append(rows, table.Row{shortcuts[KeyBoardKey(r)].Key, shortcuts[KeyBoardKey(r)].File})
 	}
 	printTable(header, rows)
 }
@@ -39,8 +39,8 @@ func printTable(header table.Row, rows []table.Row) {
 }
 
 // convertToMap converts the provided shortcuts into a map
-func convertToMap(shortcuts []*AppShortcut) map[KeyBoardKey]*AppShortcut {
-	shortcutsMap := make(map[KeyBoardKey]*AppShortcut, 0)
+func convertToMap(shortcuts []*FileOpenShortcut) map[KeyBoardKey]*FileOpenShortcut {
+	shortcutsMap := make(map[KeyBoardKey]*FileOpenShortcut, 0)
 	for _, s := range shortcuts {
 		shortcutsMap[s.Key] = s
 	}

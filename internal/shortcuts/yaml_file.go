@@ -45,10 +45,10 @@ func editYaml() error {
 
 // getDuplicates iterates through the shortcuts and considers shortcuts that have empty app name to be a duplicate entry.
 // note: the value could also be left empty intentionally.
-func getDuplicates(shortcuts []*AppShortcut) []string {
+func getDuplicates(shortcuts []*FileOpenShortcut) []string {
 	duplicates := make([]string, 0)
 	for _, s := range shortcuts {
-		if s.AppFilePath != "" {
+		if s.File != "" {
 			continue
 		}
 		duplicates = append(duplicates, string(s.Key))
@@ -57,7 +57,7 @@ func getDuplicates(shortcuts []*AppShortcut) []string {
 }
 
 // Write writes provided shortcuts to shortcuts config file
-func Write(shortcuts []*AppShortcut) error {
+func Write(shortcuts []*FileOpenShortcut) error {
 	shortcutConfigFilePath, err := getShortcutConfigFilePath()
 	if err != nil {
 		return errors.Wrapf(err, "failed to get config file path")
@@ -78,8 +78,8 @@ func Write(shortcuts []*AppShortcut) error {
 }
 
 // load returns list of app shortcuts from the shortcuts config file
-func load() ([]*AppShortcut, error) {
-	appShortcuts := make([]*AppShortcut, 0)
+func load() ([]*FileOpenShortcut, error) {
+	appShortcuts := make([]*FileOpenShortcut, 0)
 	shortcutConfigFile, err := getShortcutConfigFilePath()
 	if err != nil {
 		return nil, errors.Wrapf(err, "failed to get extra file path")
