@@ -21,7 +21,7 @@ func Setup() error {
 	if err != nil {
 		return errors.Wrapf(err, "failed to get path of the config file")
 	}
-	if err := os.MkdirAll(filepath.Dir(configFile), 0644); err != nil {
+    if err := os.MkdirAll(filepath.Dir(configFile), 0755); err != nil {
 		return errors.Wrapf(err, "failed to ensure %s dir", filepath.Dir(configFile))
 	}
 	c, err := GetDefault()

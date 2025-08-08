@@ -3,7 +3,7 @@ package root
 import (
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
-	"github.com/swarupdonepudi/karayaml/internal/karabinerconfig"
+    "github.com/swarupdonepudi/karayaml/internal/karabinerconfig"
 )
 
 var Init = &cobra.Command{
@@ -13,14 +13,9 @@ var Init = &cobra.Command{
 }
 
 func initHandler(cmd *cobra.Command, args []string) {
-	c, err := karabinerconfig.GetDefault()
-	if err != nil {
-		log.Fatalf("failed to get karabiner config")
-		return
-	}
-	if err := c.Save(); err != nil {
-		log.Fatalf("failed to save config with shortcuts")
-		return
-	}
+    if err := karabinerconfig.Setup(); err != nil {
+        log.Fatalf("failed to setup karabiner config")
+        return
+    }
 	log.Info("success!")
 }
