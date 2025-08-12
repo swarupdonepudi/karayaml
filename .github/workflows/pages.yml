@@ -31,7 +31,6 @@ jobs:
         with:
           node-version: 20
           cache: npm
-          cache-dependency-path: pages/package-lock.json
 
       # Enables Pages and provides metadata; safe to run in all builds
       - name: Configure Pages
