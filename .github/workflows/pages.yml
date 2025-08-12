@@ -46,8 +46,8 @@ jobs:
       # Build the Vite app from the pages/ folder
       - name: Build site
         env:
-          # For project Pages, assets should live under /<repo>/
-          BASE_PATH: /${{ github.event.repository.name }}/
+          # Custom domain/user site: serve from root
+          BASE_PATH: /
         run: |
           npm run build
           # SPA deep links: serve index.html for unknown routes
