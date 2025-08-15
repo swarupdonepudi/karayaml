@@ -9,8 +9,8 @@ export default function ExampleGallery() {
   file: /System/Applications/Calendar.app`;
 
   const deployExample = `karayaml init                                  # ensure Karabiner config exists
-karayaml add --key a --file /Applications/Slack.app       # add Slack launcher
-karayaml add --key 1 --file /System/Applications/Calendar.app  # add Calendar launcher`;
+karayaml map a /Applications/Slack.app       # add Slack launcher
+karayaml map 1 /System/Applications/Calendar.app  # add Calendar launcher`;
 
   return (
     <section id="examples" className="bg-surface py-32">

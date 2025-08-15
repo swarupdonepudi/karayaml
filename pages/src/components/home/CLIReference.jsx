@@ -15,8 +15,8 @@ const commands = [
     description: "open the shortcuts YAML in your editor (validates on save)"
   },
   {
-    command: "karayaml add --key <key> --file <path_to_app>",
-    description: "add a new shortcut mapping (key to app)"
+    command: "karayaml map <key> <path_to_app>",
+    description: "map a key to an app (shortcut mapping)"
   },
   {
     command: "karayaml list",
@@ -29,20 +29,12 @@ const commands = [
 ];
 
 const flags = [
-  {
-    flag: "--key <char>",
-    description: "Shortcut key (a single letter [a–z], number [0–9], or function key F1–F12) for the `add` command."
-  },
-  {
-    flag: "--file <path>",
-    description: "Application file path to open for the `add` command (e.g. `/Applications/Notes.app`)."
-  }
 ];
 
 export default function CLIReference() {
   const codeExample = `karayaml init           # one-time setup (creates default Karabiner config if needed)
 karayaml edit           # open the shortcuts YAML in your editor (validates on save)
-karayaml add --key <key> --file <path_to_app>   # add a new shortcut mapping (key to app)
+karayaml map <key> <path_to_app>   # map a key to an app
 karayaml list           # list all configured shortcuts in a table
 karayaml version        # show KaraYAML CLI version`;
 
