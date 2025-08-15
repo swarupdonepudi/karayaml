@@ -10,7 +10,7 @@ export default function Quickstart() {
   
   const editCode = `karayaml edit                # open ~/.karayaml/shortcuts.yaml in VS Code
 #    – or –
-karayaml add --key a --file /Applications/Slack.app`;
+karayaml map a /Applications/Slack.app`;
 
   return (
     <section id="quickstart" className="max-w-7xl mx-auto px-6 py-32">

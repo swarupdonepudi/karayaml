@@ -15,7 +15,7 @@ Define your shortcuts once, run a command, and Karabiner‑Elements reloads with
 * **One‑command editing** – `karayaml edit` opens the file in VS Code (or `$EDITOR`) and validates duplicates
 * **Safe init** – `karayaml init` generates a working Karabiner config if you do not have one
 * **Pretty list view** – `karayaml list` prints a clean table of your mappings
-* **Add on the fly** – `karayaml add --key k --file /Applications/Slack.app` appends a new shortcut and reloads
+* **Add on the fly** – `karayaml map k /Applications/Slack.app` appends a new shortcut and reloads
 * **Simple Go binary** – no dependencies beyond `go 1.24+`
 
 ---
@@ -39,7 +39,7 @@ karayaml init
 # 2. Create or edit your YAML shortcuts
 karayaml edit                # opens ~/.karayaml/shortcuts.yaml in VS Code
 #   – or –
-karayaml add --key a --file /Applications/Slack.app
+karayaml map a /Applications/Slack.app
 
 # 3. Reload Karabiner automatically (done by karayaml)
 # 4. Profit – Caps Lock + <key> now launches your apps
@@ -67,7 +67,7 @@ karayaml add --key a --file /Applications/Slack.app
 |--------------------|---------------------------------------------------------------------------------------------------------|
 | `karayaml init`    | Generate a default `~/.config/karabiner/karabiner.json` with Hyper‑key and arrow helpers.               |
 | `karayaml edit`    | Open `~/.karayaml/shortcuts.yaml` in VS Code (or set `$EDITOR`). Prevent duplicate keys before closing. |
-| `karayaml add`     | Add a single shortcut from the CLI (e.g. `--key a --file /Applications/Slack.app`).                     |
+| `karayaml map`     | Add a single shortcut from the CLI (e.g. `a /Applications/Slack.app`).                                  |
 | `karayaml list`    | Print a table of current shortcuts.                                                                     |
 | `karayaml version` | Show the CLI version.                                                                                   |
 
