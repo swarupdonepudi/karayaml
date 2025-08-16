@@ -62,7 +62,7 @@ export default function Hero() {
             transition={{ delay: 0.2 }}
             className="text-xl md:text-2xl text-text-muted leading-relaxed mb-8 max-w-3xl mx-auto"
           >
-            Map Caps Lock + any key to open apps. Define shortcuts in one YAML file; KaraYAML updates Karabiner automatically
+            Map Caps Lock + any key to open apps. Define shortcuts in <code className="bg-code-bg px-2 py-1 rounded font-mono text-sm border border-border">~/.kara.yaml</code>; KaraYAML updates Karabiner automatically
           </motion.p>
 
           <HeroVisual />

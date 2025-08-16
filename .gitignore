@@ -1,3 +1,4 @@
 .idea
 build/
-pages/node_modules/
+site/node_modules/
+site/dist/

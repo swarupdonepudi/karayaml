@@ -133,7 +133,6 @@ export default function Layout({ children, currentPageName }) {
               </div>
               <div className="flex items-center space-x-6 text-sm text-text-muted">
                 <a href="#" className="hover:text-text transition-colors">GitHub</a>
-                <a href="#" className="hover:text-text transition-colors">Docs</a>
                 <a href="#" className="hover:text-text transition-colors">CLI Reference</a>
                 <a href="#" className="hover:text-text transition-colors">Examples</a>
                 <a href="#" className="hover:text-text transition-colors">License (Apache-2.0)</a>
