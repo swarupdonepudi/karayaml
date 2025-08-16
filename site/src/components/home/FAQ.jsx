@@ -27,7 +27,7 @@ const faqs = [
   },
   {
     question: "Where is the YAML config stored?",
-    answer: "KaraYAML keeps your shortcuts in `~/.karayaml/shortcuts.yaml` under your home directory. The Karabiner JSON config is updated in its standard location (`~/.config/karabiner/karabiner.json`), so Karabiner-Elements picks up the changes."
+    answer: "KaraYAML keeps your shortcuts in `~/.kara.yaml` under your home directory. The Karabiner JSON config is updated in its standard location (`~/.config/karabiner/karabiner.json`), so Karabiner-Elements picks up the changes."
   },
   {
     question: "Is KaraYAML free and open-source?",

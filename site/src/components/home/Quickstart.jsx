@@ -8,7 +8,7 @@ export default function Quickstart() {
   
   const initCode = "karayaml init";
   
-  const editCode = `karayaml edit                # open ~/.karayaml/shortcuts.yaml in VS Code
+  const editCode = `karayaml edit                # open ~/.kara.yaml in VS Code
 #    – or –
 karayaml map a /Applications/Slack.app`;
 
