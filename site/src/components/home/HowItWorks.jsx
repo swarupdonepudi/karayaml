@@ -38,10 +38,7 @@ export default function HowItWorks() {
             viewport={{ once: true }}
             className="text-4xl md:text-5xl font-bold mb-6"
           >
-            How it{" "}
-            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              works
-            </span>
+            <span className="text-text">How it works</span>
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}

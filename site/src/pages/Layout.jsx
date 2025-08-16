@@ -19,6 +19,16 @@ export default function Layout({ children, currentPageName }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Keep the Tailwind dark class on the root element so CSS variables apply to body as well
+  useEffect(() => {
+    const root = document.documentElement; // <html>
+    if (isDark) {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+  }, [isDark]);
+
   const toggleTheme = () => {
     setIsDark(!isDark);
   };
@@ -31,8 +41,6 @@ export default function Layout({ children, currentPageName }) {
   };
 
   return (
-    <div className={isDark ? 'dark' : ''}>
-
       <div className="min-h-screen bg-background">
         {/* Navigation */}
         <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
@@ -137,7 +145,6 @@ export default function Layout({ children, currentPageName }) {
           </div>
         </footer>
       </div>
-    </div>
   );
 }
 

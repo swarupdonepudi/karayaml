@@ -47,10 +47,7 @@ karayaml version        # show KaraYAML CLI version`;
           viewport={{ once: true }}
           className="text-4xl md:text-5xl font-bold mb-6"
         >
-          Complete{" "}
-          <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            CLI reference
-          </span>
+          <span className="text-text">Complete CLI reference</span>
         </motion.h2>
         <motion.p 
           initial={{ opacity: 0, y: 20 }}

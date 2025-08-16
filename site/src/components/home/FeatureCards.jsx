@@ -46,10 +46,7 @@ export default function FeatureCards() {
           viewport={{ once: true }}
           className="text-4xl md:text-5xl font-bold mb-6"
         >
-          Why choose{" "}
-          <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            KaraYAML
-          </span>
+          Why choose <span className="text-text">KaraYAML</span>
         </motion.h2>
         <motion.p 
           initial={{ opacity: 0, y: 20 }}

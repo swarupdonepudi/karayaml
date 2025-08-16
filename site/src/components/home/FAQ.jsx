@@ -51,10 +51,7 @@ export default function FAQ() {
           viewport={{ once: true }}
           className="text-4xl md:text-5xl font-bold mb-6"
         >
-          Frequently asked{" "}
-          <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            questions
-          </span>
+          <span className="text-text">Frequently asked questions</span>
         </motion.h2>
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
