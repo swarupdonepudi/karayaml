@@ -63,10 +63,10 @@ release: build test release-github
 
 .PHONY: develop-site
 develop-site:
-	cd pages && npm install --no-audit --no-fund
-	cd pages && npm run dev
+	cd site && npm install --no-audit --no-fund
+	cd site && npm run dev
 
 .PHONY: preview-site
 preview-site:
-	cd pages && npm install --no-audit --no-fund
-	cd pages && npm run build:serve
+	cd site && npm install --no-audit --no-fund
+	cd site && npm run build:serve
