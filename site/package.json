@@ -5,7 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "start": "vite --open",
     "build": "vite build",
+    "serve": "vite preview --open",
+    "build:serve": "vite build && vite preview --open",
     "lint": "eslint .",
     "preview": "vite preview"
   },

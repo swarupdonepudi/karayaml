@@ -60,3 +60,13 @@ release-github:
 
 .PHONY: release
 release: build test release-github
+
+.PHONY: develop-site
+develop-site:
+	cd pages && npm install --no-audit --no-fund
+	cd pages && npm run dev
+
+.PHONY: preview-site
+preview-site:
+	cd pages && npm install --no-audit --no-fund
+	cd pages && npm run build:serve

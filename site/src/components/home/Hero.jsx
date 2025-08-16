@@ -52,13 +52,7 @@ export default function Hero() {
             transition={{ delay: 0.1 }}
             className="text-5xl md:text-7xl font-bold leading-tight mb-8"
           >
-            <span className="bg-gradient-to-r from-text to-text-muted bg-clip-text text-transparent">
-              Karabiner-Elements config
-            </span>
-            <br />
-            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              made simple with YAML
-            </span>
+            Launch apps on Mac with Caps Lock shortcuts
           </motion.h1>
 
           {/* Subhead */}
@@ -68,7 +62,7 @@ export default function Hero() {
             transition={{ delay: 0.2 }}
             className="text-xl md:text-2xl text-text-muted leading-relaxed mb-8 max-w-3xl mx-auto"
           >
-            Write one YAML file to set up all your custom keyboard shortcuts. KaraYAML CLI generates the Karabiner config and reloads it automatically – no JSON editing, no hassle.
+            Map Caps Lock + any key to open apps. Define shortcuts in one YAML file; KaraYAML updates Karabiner automatically
           </motion.p>
 
           <HeroVisual />

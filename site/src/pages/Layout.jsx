@@ -32,47 +32,17 @@ export default function Layout({ children, currentPageName }) {
 
   return (
     <div className={isDark ? 'dark' : ''}>
-      <style>{`
-        :root {
-          --primary: ${isDark ? '#3b82f6' : '#1e40af'};
-          --primary-dark: ${isDark ? '#2563eb' : '#1e3a8a'};
-          --secondary: ${isDark ? '#10b981' : '#059669'};
-          --accent: ${isDark ? '#fbbf24' : '#f59e0b'};
-          --background: ${isDark ? '#0f172a' : '#ffffff'};
-          --surface: ${isDark ? '#1e293b' : '#f8fafc'};
-          --border: ${isDark ? '#334155' : '#e2e8f0'};
-          --text: ${isDark ? '#f1f5f9' : '#0f172a'};
-          --text-muted: ${isDark ? '#94a3b8' : '#64748b'};
-          --code-bg: ${isDark ? '#1e293b' : '#f1f5f9'};
-        }
-        
-        body {
-          background-color: var(--background);
-          color: var(--text);
-          transition: all 0.3s ease;
-        }
-        
-        .code-block {
-          background: var(--code-bg);
-          border: 1px solid var(--border);
-        }
-        
-        .surface {
-          background: var(--surface);
-          border: 1px solid var(--border);
-        }
-      `}</style>
 
       <div className="min-h-screen bg-background">
         {/* Navigation */}
         <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-          isScrolled ? 'bg-background/80 backdrop-blur-lg border-b border-border' : 'bg-transparent'
+          isScrolled ? 'bg-background/80 backdrop-blur-lg border-b border-border' : 'bg-background/50'
         }`}>
           <div className="max-w-7xl mx-auto px-6 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <Terminal className="w-8 h-8 text-primary" />
-                <span className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                <span className="text-2xl font-bold text-text">
                   KaraYAML
                 </span>
               </div>

@@ -49,8 +49,7 @@ export default function FAQ() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-4xl md:// ... keep existing code (first 3 faqs) ...
-5xl font-bold mb-6"
+          className="text-4xl md:text-5xl font-bold mb-6"
         >
           Frequently asked{" "}
           <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
