@@ -22,10 +22,7 @@ karayaml map 1 /System/Applications/Calendar.app  # add Calendar launcher`;
             viewport={{ once: true }}
             className="text-4xl md:text-5xl font-bold mb-6"
           >
-            See it in{" "}
-            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              action
-            </span>
+            <span className="text-text">See it in action</span>
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}

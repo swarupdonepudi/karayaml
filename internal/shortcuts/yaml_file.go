@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	FileName = "shortcuts.yaml"
+	FileName = ".kara.yaml"
 )
 
 // editYaml opens config file in vs-code and waits until the file is closed.
@@ -106,7 +106,7 @@ func getShortcutConfigFilePath() (string, error) {
 	if err != nil {
 		return "", errors.Wrapf(err, "failed to get home dir")
 	}
-	return filepath.Join(homeDir, ".karayaml", FileName), nil
+	return filepath.Join(homeDir, FileName), nil
 }
 
 // IsFileExists check if a file exists

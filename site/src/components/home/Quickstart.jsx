@@ -8,7 +8,7 @@ export default function Quickstart() {
   
   const initCode = "karayaml init";
   
-  const editCode = `karayaml edit                # open ~/.karayaml/shortcuts.yaml in VS Code
+  const editCode = `karayaml edit                # open ~/.kara.yaml in VS Code
 #    – or –
 karayaml map a /Applications/Slack.app`;
 
@@ -21,10 +21,7 @@ karayaml map a /Applications/Slack.app`;
           viewport={{ once: true }}
           className="text-4xl md:text-5xl font-bold mb-6"
         >
-          Get started in{" "}
-          <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            minutes
-          </span>
+          <span className="text-text">Get started in minutes</span>
         </motion.h2>
         <motion.p 
           initial={{ opacity: 0, y: 20 }}

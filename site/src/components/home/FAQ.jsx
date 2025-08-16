@@ -27,7 +27,7 @@ const faqs = [
   },
   {
     question: "Where is the YAML config stored?",
-    answer: "KaraYAML keeps your shortcuts in `~/.karayaml/shortcuts.yaml` under your home directory. The Karabiner JSON config is updated in its standard location (`~/.config/karabiner/karabiner.json`), so Karabiner-Elements picks up the changes."
+    answer: "KaraYAML keeps your shortcuts in `~/.kara.yaml` under your home directory. The Karabiner JSON config is updated in its standard location (`~/.config/karabiner/karabiner.json`), so Karabiner-Elements picks up the changes."
   },
   {
     question: "Is KaraYAML free and open-source?",
@@ -49,13 +49,9 @@ export default function FAQ() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-4xl md:// ... keep existing code (first 3 faqs) ...
-5xl font-bold mb-6"
+          className="text-4xl md:text-5xl font-bold mb-6"
         >
-          Frequently asked{" "}
-          <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            questions
-          </span>
+          <span className="text-text">Frequently asked questions</span>
         </motion.h2>
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
