@@ -52,3 +52,15 @@ func save(shortcuts []*FileOpenShortcut) error {
 
 	return nil
 }
+
+// Reload reads shortcuts from the YAML file and applies them to Karabiner.
+func Reload() error {
+	loaded, err := load()
+	if err != nil {
+		return errors.Wrapf(err, "failed to get list of shortcuts from config file")
+	}
+	if err := save(loaded); err != nil {
+		return errors.Wrap(err, "failed to save list of shortcuts")
+	}
+	return nil
+}

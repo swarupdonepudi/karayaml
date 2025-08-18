@@ -4,6 +4,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
     "github.com/swarupdonepudi/karayaml/internal/karabinerconfig"
+    "github.com/swarupdonepudi/karayaml/internal/shortcuts"
 )
 
 var Init = &cobra.Command{
@@ -17,5 +18,18 @@ func initHandler(cmd *cobra.Command, args []string) {
         log.Fatalf("failed to setup karabiner config")
         return
     }
-	log.Info("success!")
+
+    if created, err := shortcuts.EnsureDefaultShortcuts(); err != nil {
+        log.Fatalf("failed to ensure default shortcuts: %v", err)
+        return
+    } else if created {
+        log.Info("created default shortcuts for Safari (s) and Mail (m)")
+    }
+
+    if err := shortcuts.Reload(); err != nil {
+        log.Fatalf("failed to reload shortcuts: %v", err)
+        return
+    }
+
+    log.Info("initialized karabiner config and shortcuts")
 }

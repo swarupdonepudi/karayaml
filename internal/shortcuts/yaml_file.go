@@ -132,3 +132,27 @@ func IsDirExists(d string) bool {
 	}
 	return info.IsDir()
 }
+
+// EnsureDefaultShortcuts creates a default shortcuts file with two
+// out-of-the-box entries if it does not already exist. It returns true
+// when the file was created, and false when it already existed.
+//
+// We use application names so `open -a` resolves them reliably across macOS
+// versions without requiring absolute bundle paths.
+func EnsureDefaultShortcuts() (bool, error) {
+	shortcutConfigFilePath, err := getShortcutConfigFilePath()
+	if err != nil {
+		return false, errors.Wrapf(err, "failed to get config file path")
+	}
+	if IsFileExists(shortcutConfigFilePath) {
+		return false, nil
+	}
+	defaults := []*FileOpenShortcut{
+		{File: "Safari", Key: KeyBoardKey("s")},
+		{File: "Mail", Key: KeyBoardKey("m")},
+	}
+	if err := Write(defaults); err != nil {
+		return false, errors.Wrapf(err, "failed to initialize shortcut config file")
+	}
+	return true, nil
+}
