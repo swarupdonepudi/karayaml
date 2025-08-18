@@ -1,3 +1,70 @@
 package defaulteditor
 
-const DefaultEditor = "code"
+import (
+	"os"
+	"os/exec"
+	"runtime"
+	"strings"
+)
+
+// NewEditorCommand returns an *exec.Cmd that opens the provided file in an editor
+// and blocks until the editor exits. Resolution order:
+// 1) $VISUAL
+// 2) $EDITOR
+// 3) VS Code `code --wait`
+// 4) macOS TextEdit via `open -W -t`
+// 5) fallback to `vi`
+func NewEditorCommand(filePath string) *exec.Cmd {
+	// Prefer VISUAL, then EDITOR
+	editor := strings.TrimSpace(os.Getenv("VISUAL"))
+	if editor == "" {
+		editor = strings.TrimSpace(os.Getenv("EDITOR"))
+	}
+
+	// Helper to detect VS Code launcher
+	isCode := func(name string) bool {
+		base := name
+		if idx := strings.LastIndex(name, "/"); idx != -1 {
+			base = name[idx+1:]
+		}
+		return base == "code"
+	}
+
+	build := func(name string, extraArgs []string) *exec.Cmd {
+		parts := strings.Fields(name)
+		bin := parts[0]
+		args := append(parts[1:], extraArgs...)
+		args = append(args, filePath)
+		return exec.Command(bin, args...)
+	}
+
+	if editor != "" {
+		extra := []string{}
+		if isCode(editor) {
+			// Ensure we wait for the file to close
+			// Simple check to avoid duplicating --wait
+			if !strings.Contains(" "+editor+" ", " --wait ") {
+				extra = append(extra, "--wait")
+			}
+		}
+		// If binary exists in PATH or user provided explicit path, use it
+		if fields := strings.Fields(editor); len(fields) > 0 {
+			if _, err := exec.LookPath(fields[0]); err == nil || strings.Contains(fields[0], "/") {
+				return build(editor, extra)
+			}
+		}
+	}
+
+	// Try VS Code if available
+	if _, err := exec.LookPath("code"); err == nil {
+		return exec.Command("code", "--wait", filePath)
+	}
+
+	// macOS: TextEdit in blocking mode
+	if runtime.GOOS == "darwin" {
+		return exec.Command("open", "-W", "-t", filePath)
+	}
+
+	// Final fallback
+	return exec.Command("vi", filePath)
+}
