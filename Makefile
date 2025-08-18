@@ -2,7 +2,7 @@ version?=dev
 name=karayaml
 pkg=github.com/swarupdonepudi/karayaml
 build_dir=build
-LDFLAGS=-ldflags "-X ${pkg}/cmd/karayaml/root/version.VersionLabel=${version}"
+LDFLAGS=-ldflags "-X ${pkg}/cmd/karayaml/root.VersionLabel=${version}"
 
 build_cmd=go build -v ${LDFLAGS}
 
