@@ -6,7 +6,6 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/swarupdonepudi/karayaml/internal/defaulteditor"
 	"os"
-	"os/exec"
 	"path/filepath"
 )
 
@@ -29,11 +28,13 @@ func editYaml() error {
 	for {
 		duplicates := make([]string, 0)
 
-		cmd := exec.Command(defaulteditor.DefaultEditor, "--wait", configFile)
+		cmd := defaulteditor.NewEditorCommand(configFile)
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
 		cmd.Stdin = os.Stdin
-		cmd.Run()
+		if err := cmd.Run(); err != nil {
+			return errors.Wrapf(err, "failed to launch editor")
+		}
 
 		appShortcuts, err := load()
 		if err != nil {
