@@ -64,3 +64,14 @@ func Reload() error {
 	}
 	return nil
 }
+
+// convertToMap converts the provided shortcuts into a map keyed by KeyBoardKey.
+// When the same key appears multiple times, the last occurrence wins for
+// Karabiner rule generation.
+func convertToMap(shortcuts []*FileOpenShortcut) map[KeyBoardKey]*FileOpenShortcut {
+	shortcutsMap := make(map[KeyBoardKey]*FileOpenShortcut, 0)
+	for _, s := range shortcuts {
+		shortcutsMap[s.Key] = s
+	}
+	return shortcutsMap
+}

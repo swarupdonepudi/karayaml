@@ -4,6 +4,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/swarupdonepudi/karayaml/internal/shortcuts"
+	"strings"
 )
 
 var Map = &cobra.Command{
@@ -14,11 +15,11 @@ var Map = &cobra.Command{
 }
 
 func mapHandler(cmd *cobra.Command, args []string) {
-	key := args[0]
+	key := strings.ToLower(args[0])
 	file := args[1]
 
-	if len(key) != 1 {
-		log.Fatalf("key must only be one character")
+	if !shortcuts.IsValidKeyBoardKey(key) {
+		log.Fatalf("invalid key: must be one of the supported keys; see internal/shortcuts/key_board_key.go")
 		return
 	}
 
@@ -26,5 +27,3 @@ func mapHandler(cmd *cobra.Command, args []string) {
 		log.Fatalf("%v", err)
 	}
 }
-
-

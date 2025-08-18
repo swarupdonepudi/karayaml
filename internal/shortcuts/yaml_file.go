@@ -19,12 +19,12 @@ func editYaml() error {
 	if err != nil {
 		return errors.Wrapf(err, "failed to get shortcut config file path")
 	}
-    // Ensure file exists with an empty list if missing
-    if !IsFileExists(configFile) {
-        if err := Write([]*FileOpenShortcut{}); err != nil {
-            return errors.Wrapf(err, "failed to initialize shortcut config file")
-        }
-    }
+	// Ensure file exists with an empty list if missing
+	if !IsFileExists(configFile) {
+		if err := Write([]*FileOpenShortcut{}); err != nil {
+			return errors.Wrapf(err, "failed to initialize shortcut config file")
+		}
+	}
 	for {
 		duplicates := make([]string, 0)
 
@@ -69,8 +69,10 @@ func Write(shortcuts []*FileOpenShortcut) error {
 	if err != nil {
 		return errors.Wrapf(err, "failed to get config file path")
 	}
+	// Sort for consistent YAML ordering while preserving duplicate key order
+	sortShortcutsStable(shortcuts)
 	if !IsDirExists(filepath.Dir(shortcutConfigFilePath)) {
-        if err := os.MkdirAll(filepath.Dir(shortcutConfigFilePath), 0755); err != nil {
+		if err := os.MkdirAll(filepath.Dir(shortcutConfigFilePath), 0755); err != nil {
 			return errors.Wrapf(err, "failed to create %s dir", filepath.Dir(shortcutConfigFilePath))
 		}
 	}
@@ -78,7 +80,7 @@ func Write(shortcuts []*FileOpenShortcut) error {
 	if err != nil {
 		return errors.Wrapf(err, "failed to initialize")
 	}
-    if err := os.WriteFile(shortcutConfigFilePath, defaultShortcutsYamlBytes, 0644); err != nil {
+	if err := os.WriteFile(shortcutConfigFilePath, defaultShortcutsYamlBytes, 0644); err != nil {
 		return errors.Wrapf(err, "failed to write %s file", shortcutConfigFilePath)
 	}
 	return nil
