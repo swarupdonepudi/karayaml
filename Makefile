@@ -12,13 +12,13 @@ deps:
 	go mod tidy
 
 .PHONY: build_darwin
-build_darwin: vet
+build_darwin: vet fmt
 	GOOS=darwin ${build_cmd} -o ${build_dir}/${name}-darwin .
 
 .PHONY: build
 build: ${build_dir}/${name}
 
-${build_dir}/${name}: deps vet
+${build_dir}/${name}: deps vet fmt
 	GOOS=darwin GOARCH=amd64 ${build_cmd} -o ${build_dir}/${name}-darwin-amd64 .
 	GOOS=darwin GOARCH=arm64 ${build_cmd} -o ${build_dir}/${name}-darwin-arm64 .
 

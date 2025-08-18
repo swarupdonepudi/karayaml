@@ -1,5 +1,7 @@
 package shortcuts
 
+import "strings"
+
 type KeyBoardKey string
 
 const (
@@ -54,3 +56,20 @@ const (
 	NumberTen   KeyBoardKey = "10"
 	SemiColon   KeyBoardKey = ";" //does not work as hot key with karabiner
 )
+
+var AllowedKeyBoardKeys = []KeyBoardKey{
+	F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12,
+	A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z,
+	NumberZero, NumberOne, NumberTwo, NumberThree, NumberFour, NumberFive, NumberSix, NumberSeven, NumberEight, NumberNine, NumberTen,
+	SemiColon,
+}
+
+func IsValidKeyBoardKey(key string) bool {
+	key = strings.ToLower(key)
+	for _, k := range AllowedKeyBoardKeys {
+		if string(k) == key {
+			return true
+		}
+	}
+	return false
+}
