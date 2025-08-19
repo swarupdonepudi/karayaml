@@ -30,6 +30,13 @@ test:
 run: build
 	${build_dir}/${name}
 
+.PHONY: textedit-test
+textedit-test:
+	VISUAL= EDITOR="osascript ${CURDIR}/scripts/textedit_wait.applescript" go run ./main.go edit
+
+.PHONY: text
+text: textedit-test
+
 .PHONY: vet
 vet:
 	go vet ./...
