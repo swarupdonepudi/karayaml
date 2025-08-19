@@ -12,7 +12,7 @@ import (
 // 1) $VISUAL
 // 2) $EDITOR
 // 3) VS Code `code --wait`
-// 4) macOS TextEdit via `open -W -t`
+// 4) macOS TextEdit via AppleScript waiting for the document window to close
 // 5) fallback to `vi`
 func NewEditorCommand(filePath string) *exec.Cmd {
 	// Prefer VISUAL, then EDITOR
@@ -60,9 +60,21 @@ func NewEditorCommand(filePath string) *exec.Cmd {
 		return exec.Command("code", "--wait", filePath)
 	}
 
-	// macOS: TextEdit in blocking mode
+	// macOS: TextEdit with window-close (Cmd+W) detection.
+	// `open -W` waits for the entire app to quit (Cmd+Q). Instead, run a small
+	// AppleScript that opens the file and blocks until that specific document is closed.
 	if runtime.GOOS == "darwin" {
-		return exec.Command("open", "-W", "-t", filePath)
+		script := `on run argv
+set thePath to POSIX file (item 1 of argv)
+tell application "TextEdit"
+	activate
+	set theDoc to open thePath
+	repeat while (exists theDoc)
+		delay 0.2
+	end repeat
+end tell
+end run`
+		return exec.Command("osascript", "-e", script, filePath)
 	}
 
 	// Final fallback

@@ -1,6 +1,7 @@
 package shortcuts
 
 import (
+	"bytes"
 	"github.com/ghodss/yaml"
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
@@ -97,10 +98,39 @@ func load() ([]*FileOpenShortcut, error) {
 	if err != nil {
 		return nil, errors.Wrapf(err, "failed to read %s file", shortcutConfigFile)
 	}
-	if err := yaml.Unmarshal(shortcutsFileContent, &appShortcuts); err != nil {
+	// Sanitize to remove stray control characters that YAML cannot parse
+	sanitized := sanitizeYAMLBytes(shortcutsFileContent)
+	if len(bytes.TrimSpace(sanitized)) == 0 {
+		return appShortcuts, nil
+	}
+	if err := yaml.Unmarshal(sanitized, &appShortcuts); err != nil {
 		return nil, errors.Wrapf(err, "failed to yaml unmarshal app shortcuts config file")
 	}
 	return appShortcuts, nil
+}
+
+// sanitizeYAMLBytes removes disallowed ASCII control characters from YAML while
+// preserving whitespace meaningful to YAML (tab, CR, LF). It also strips a
+// leading UTF-8 BOM if present.
+func sanitizeYAMLBytes(in []byte) []byte {
+	if len(in) == 0 {
+		return in
+	}
+	// Remove UTF-8 BOM
+	if len(in) >= 3 && in[0] == 0xEF && in[1] == 0xBB && in[2] == 0xBF {
+		in = in[3:]
+	}
+	out := make([]byte, 0, len(in))
+	for _, b := range in {
+		if b == 0x09 || b == 0x0A || b == 0x0D || b >= 0x20 { // allow tab, LF, CR, printable
+			if b == 0x7F { // DEL
+				continue
+			}
+			out = append(out, b)
+		}
+		// else drop control char
+	}
+	return out
 }
 
 // getShortcutConfigFilePath returns the location of the keyboard shortcut configs
