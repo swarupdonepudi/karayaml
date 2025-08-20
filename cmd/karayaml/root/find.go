@@ -2,9 +2,9 @@ package root
 
 import (
 	"fmt"
-	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/swarupdonepudi/karayaml/internal/shortcuts"
+	"os"
 )
 
 var Find = &cobra.Command{
@@ -15,7 +15,8 @@ var Find = &cobra.Command{
 		query := args[0]
 		matches, err := shortcuts.Find(query)
 		if err != nil {
-			log.Fatalf("%v", err)
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
 		}
 		// readability: blank line before printing result summary/table
 		fmt.Println("")

@@ -1,9 +1,10 @@
 package root
 
 import (
-	log "github.com/sirupsen/logrus"
+	"fmt"
 	"github.com/spf13/cobra"
 	"github.com/swarupdonepudi/karayaml/internal/shortcuts"
+	"os"
 )
 
 var List = &cobra.Command{
@@ -15,7 +16,8 @@ var List = &cobra.Command{
 func listHandler(cmd *cobra.Command, args []string) {
 	list, err := shortcuts.List()
 	if err != nil {
-		log.Fatalf("%v", err)
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
 	}
 	shortcuts.PrintList(list)
 }

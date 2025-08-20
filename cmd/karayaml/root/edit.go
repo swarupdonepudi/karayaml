@@ -1,9 +1,10 @@
 package root
 
 import (
-	log "github.com/sirupsen/logrus"
+	"fmt"
 	"github.com/spf13/cobra"
 	"github.com/swarupdonepudi/karayaml/internal/shortcuts"
+	"os"
 )
 
 var Edit = &cobra.Command{
@@ -14,6 +15,7 @@ var Edit = &cobra.Command{
 
 func editHandler(cmd *cobra.Command, args []string) {
 	if err := shortcuts.Edit(); err != nil {
-		log.Fatalf("%v", err)
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
 	}
 }

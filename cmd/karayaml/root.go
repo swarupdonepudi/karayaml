@@ -7,7 +7,6 @@ import (
 
 	"github.com/swarupdonepudi/karayaml/cmd/karayaml/root"
 
-	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
 
@@ -33,8 +32,7 @@ func init() {
 	}
 	cobra.OnInitialize(func() {
 		if debug {
-			log.SetLevel(log.DebugLevel)
-			log.Debug("running in debug mode")
+			fmt.Fprintln(os.Stderr, "running in debug mode")
 		}
 	})
 

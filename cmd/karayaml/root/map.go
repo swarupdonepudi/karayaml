@@ -1,9 +1,10 @@
 package root
 
 import (
-	log "github.com/sirupsen/logrus"
+	"fmt"
 	"github.com/spf13/cobra"
 	"github.com/swarupdonepudi/karayaml/internal/shortcuts"
+	"os"
 	"strings"
 )
 
@@ -19,11 +20,12 @@ func mapHandler(cmd *cobra.Command, args []string) {
 	file := args[1]
 
 	if !shortcuts.IsValidKeyBoardKey(key) {
-		log.Fatalf("invalid key: must be one of the supported keys; see internal/shortcuts/key_board_key.go")
-		return
+		fmt.Fprintln(os.Stderr, "invalid key: must be one of the supported keys; see internal/shortcuts/key_board_key.go")
+		os.Exit(1)
 	}
 
 	if err := shortcuts.Add(key, file); err != nil {
-		log.Fatalf("%v", err)
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
 	}
 }

@@ -23,7 +23,7 @@ const steps = [
   {
     icon: RotateCcw,
     title: "Karabiner-Elements",
-    description: "Triggers Karabiner-Elements to reload, instantly activating shortcuts. This opens the app if it's closed, or brings it to the front if it's already running."
+    description: "Reload Karabiner-Elements to activate shortcuts immediately. If it's running, it refreshes; if not, it launches."
   }
 ];
 
