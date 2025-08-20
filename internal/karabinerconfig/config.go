@@ -2,8 +2,8 @@ package karabinerconfig
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/pkg/errors"
-	log "github.com/sirupsen/logrus"
 	"os"
 	"path/filepath"
 )
@@ -36,7 +36,7 @@ func Setup() error {
 	if err := os.WriteFile(configFile, configBytes, 0644); err != nil {
 		return errors.Wrapf(err, "failed to write %s file", configFile)
 	}
-	log.Infof("karabiner config file %s created", configFile)
+	fmt.Printf("karabiner config file %s created\n", configFile)
 	return nil
 }
 

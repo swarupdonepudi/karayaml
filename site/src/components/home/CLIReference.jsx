@@ -23,6 +23,14 @@ const commands = [
     description: "list all configured shortcuts in a table"
   },
   {
+    command: "karayaml find <query>",
+    description: "search shortcuts for apps whose name contains the query (case-insensitive)"
+  },
+  {
+    command: "karayaml reload",
+    description: "reload ~/.kara.yaml into Karabiner and refresh the app"
+  },
+  {
     command: "karayaml version",
     description: "show KaraYAML CLI version"
   }
@@ -36,6 +44,8 @@ export default function CLIReference() {
 karayaml edit           # open the shortcuts YAML in your editor (validates on save)
 karayaml map <key> <path_to_app>   # map a key to an app
 karayaml list           # list all configured shortcuts in a table
+karayaml find <query>   # search mappings by app name (case-insensitive)
+karayaml reload         # reload ~/.kara.yaml into Karabiner and refresh
 karayaml version        # show KaraYAML CLI version`;
 
   return (

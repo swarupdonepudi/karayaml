@@ -2,9 +2,9 @@ package shortcuts
 
 import (
 	"bytes"
+	"fmt"
 	"github.com/ghodss/yaml"
 	"github.com/pkg/errors"
-	log "github.com/sirupsen/logrus"
 	"github.com/swarupdonepudi/karayaml/internal/defaulteditor"
 	"os"
 	"path/filepath"
@@ -45,7 +45,7 @@ func editYaml() error {
 		if len(duplicates) == 0 {
 			break
 		} else {
-			log.Errorf("fix %v keys which may have either empty or duplicate shortcut mappings", duplicates)
+			fmt.Fprintf(os.Stderr, "fix %v keys which may have either empty or duplicate shortcut mappings\n", duplicates)
 		}
 	}
 	return nil

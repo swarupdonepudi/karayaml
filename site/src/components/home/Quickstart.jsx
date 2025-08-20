@@ -12,6 +12,9 @@ export default function Quickstart() {
 #    – or –
 karayaml map a /Applications/Slack.app`;
 
+  const findReloadCode = `karayaml find slack         # search mappings by app name (case-insensitive)
+karayaml reload             # reapply ~/.kara.yaml and refresh Karabiner`;
+
   return (
     <section id="quickstart" className="max-w-7xl mx-auto px-6 py-32">
       <div className="text-center mb-20">
@@ -77,6 +80,21 @@ karayaml map a /Applications/Slack.app`;
             <h3 className="text-2xl font-bold">Define your shortcuts</h3>
           </div>
           <CodeBlock code={editCode} />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.25 }}
+        >
+          <div className="flex items-center gap-4 mb-6">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-primary to-secondary flex items-center justify-center text-white font-bold text-lg">
+              4
+            </div>
+            <h3 className="text-2xl font-bold">Search & reload</h3>
+          </div>
+          <CodeBlock code={findReloadCode} />
         </motion.div>
 
         <motion.div

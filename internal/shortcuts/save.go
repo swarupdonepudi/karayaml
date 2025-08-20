@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/pkg/errors"
 	"github.com/swarupdonepudi/karayaml/internal/karabinerconfig"
+	"os/exec"
 )
 
 // save adds provided list of shortcuts to karabiner config
@@ -62,6 +63,8 @@ func Reload() error {
 	if err := save(loaded); err != nil {
 		return errors.Wrap(err, "failed to save list of shortcuts")
 	}
+	// Best-effort nudge to Karabiner-Elements to ensure the new config is active
+	_ = exec.Command("osascript", "-e", "tell application \"Karabiner-Elements\" to activate").Run()
 	return nil
 }
 
