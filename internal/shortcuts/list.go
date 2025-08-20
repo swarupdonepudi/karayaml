@@ -1,9 +1,11 @@
 package shortcuts
 
 import (
+	"fmt"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/pkg/errors"
 	"os"
+	"strings"
 )
 
 // List returns the list of keyboard shortcuts as they exist in the YAML file.
@@ -62,6 +64,23 @@ func PrintList(shortcuts []*FileOpenShortcut) {
 	}
 }
 
+// PrintMatches prints a flat table of the provided shortcuts (key and file),
+// preserving stable ordering for readability.
+func PrintMatches(matches []*FileOpenShortcut) {
+	if len(matches) == 0 {
+		return
+	}
+	ordered := make([]*FileOpenShortcut, len(matches))
+	copy(ordered, matches)
+	sortShortcutsStable(ordered)
+
+	rows := make([]table.Row, 0, len(ordered))
+	for _, s := range ordered {
+		rows = append(rows, table.Row{s.Key, s.File})
+	}
+	printTableWithTitle("Matches", rows)
+}
+
 func printTable(header table.Row, rows []table.Row) {
 	println("")
 	t := getDefaultTableWriter(header, rows)
@@ -90,4 +109,37 @@ func getDefaultTableWriter(header table.Row, rows []table.Row) table.Writer {
 		t.AppendSeparator()
 	}
 	return t
+}
+
+// Find returns all shortcuts where the file name contains the query
+// (case-insensitive). It does not mutate ordering.
+func Find(query string) ([]*FileOpenShortcut, error) {
+	list, err := List()
+	if err != nil {
+		return nil, err
+	}
+	q := strings.ToLower(strings.TrimSpace(query))
+	if q == "" {
+		return []*FileOpenShortcut{}, nil
+	}
+	matches := make([]*FileOpenShortcut, 0)
+	for _, s := range list {
+		if strings.Contains(strings.ToLower(s.File), q) {
+			matches = append(matches, s)
+		}
+	}
+	return matches, nil
+}
+
+// FormatSingleMatchMessage returns a friendly sentence for a single match.
+func FormatSingleMatchMessage(s *FileOpenShortcut) string {
+	if s == nil {
+		return ""
+	}
+	return fmt.Sprintf("Yeah, I found one match: key '%s' is mapped to '%s'", s.Key, s.File)
+}
+
+// FormatMultiMatchMessage returns a header sentence for multiple matches.
+func FormatMultiMatchMessage() string {
+	return "We have found multiple matches and here is the list"
 }

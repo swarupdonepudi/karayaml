@@ -42,6 +42,8 @@ func init() {
 		root.Map,
 		root.Edit,
 		root.Init,
+		root.Reload,
+		root.Find,
 		root.List,
 		root.Version,
 	)
