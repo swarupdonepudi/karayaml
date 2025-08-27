@@ -7,7 +7,16 @@ import { Moon, Sun, Github, Book, Terminal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function Layout({ children, currentPageName }) {
-  const [isDark, setIsDark] = useState(false);
+  // Initialize from localStorage, default to dark when not set
+  const [isDark, setIsDark] = useState(() => {
+    if (typeof window === 'undefined') return true;
+    try {
+      const stored = localStorage.getItem('theme');
+      return stored ? stored === 'dark' : true;
+    } catch (_) {
+      return true;
+    }
+  });
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -26,6 +35,15 @@ export default function Layout({ children, currentPageName }) {
       root.classList.add('dark');
     } else {
       root.classList.remove('dark');
+    }
+  }, [isDark]);
+
+  // Persist user preference
+  useEffect(() => {
+    try {
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    } catch (_) {
+      // ignore storage errors
     }
   }, [isDark]);
 
