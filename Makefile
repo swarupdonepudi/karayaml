@@ -10,6 +10,7 @@ build_cmd=go build -v ${LDFLAGS}
 deps:
 	go mod download
 	go mod tidy
+	pushd site && yarn install && popd
 
 .PHONY: build_darwin
 build_darwin: vet fmt
@@ -77,3 +78,11 @@ develop-site:
 preview-site:
 	cd site && npm install --no-audit --no-fund
 	cd site && npm run build:serve
+
+.PHONY: dev-site
+dev-site:
+	cd site && yarn dev
+
+.PHONY: build-site
+build-site:
+	cd site && yarn build

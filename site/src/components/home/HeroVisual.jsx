@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, MessageSquare, MousePointerClick, Command } from "lucide-react";
+import { ArrowRight, Command } from "lucide-react";
 
 const Key = ({ children, className = "" }) => (
   <div className={`flex items-center justify-center w-16 h-16 bg-surface border border-border rounded-lg shadow-sm font-mono text-lg ${className}`}>
@@ -8,12 +8,26 @@ const Key = ({ children, className = "" }) => (
   </div>
 );
 
-const AppIcon = ({ icon: Icon, appName }) => (
-  <div className="flex flex-col items-center gap-2">
-    <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary/10 to-secondary/10 border border-border rounded-xl shadow-lg">
-      <Icon className="w-8 h-8 text-primary" />
+const AppIcon = ({ icon: Icon, imageSrc, appName, showLabelOnHover = true }) => (
+  <div className="relative flex flex-col items-center group">
+    <div
+      className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary/10 to-secondary/10 border border-border rounded-xl shadow-lg"
+      title={appName}
+      aria-label={appName}
+    >
+      {imageSrc ? (
+        <img src={imageSrc} alt={appName} className="w-8 h-8 rounded-md" />
+      ) : (
+        <Icon className="w-8 h-8 text-primary" />
+      )}
     </div>
-    <span className="text-sm text-text-muted">{appName}</span>
+    <span
+      className={`absolute top-full mt-2 text-sm text-text-muted ${
+        showLabelOnHover ? "hidden group-hover:block" : ""
+      }`}
+    >
+      {appName}
+    </span>
   </div>
 );
 
@@ -55,7 +69,7 @@ export default function HeroVisual() {
         <span className="text-2xl font-light text-text-muted">+</span>
         <Key>S</Key>
         <ArrowRight className="w-8 h-8 text-secondary mx-4" />
-        <AppIcon icon={MessageSquare} appName="Slack" />
+        <AppIcon imageSrc="/slack.png" appName="Slack" />
       </motion.div>
 
       {/* Example 2: Cursor */}
@@ -64,7 +78,7 @@ export default function HeroVisual() {
         <span className="text-2xl font-light text-text-muted">+</span>
         <Key>C</Key>
         <ArrowRight className="w-8 h-8 text-secondary mx-4" />
-        <AppIcon icon={MousePointerClick} appName="Cursor" />
+        <AppIcon imageSrc="/cursor.png" appName="Cursor" />
       </motion.div>
     </motion.div>
   );

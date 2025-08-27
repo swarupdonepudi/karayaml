@@ -45,14 +45,24 @@ export default function Hero() {
             <Badge variant="outline" className="bg-surface">macOS</Badge>
           </motion.div>
 
+          {/* Pre-heading */}
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-2xl md:text-3xl font-semibold mb-2"
+          >
+            Supercharge Your Mac Workflow
+          </motion.p>
+
           {/* Main heading */}
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
+            transition={{ delay: 0.15 }}
             className="text-5xl md:text-7xl font-bold leading-tight mb-8"
           >
-            Launch apps on Mac with Caps Lock shortcuts
+            Instantly Launch Any App with Caps Lock + 1 Key
           </motion.h1>
 
           {/* Subhead */}
