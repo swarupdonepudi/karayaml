@@ -1,0 +1,83 @@
+version: 2
+
+project_name: karayaml
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: karayaml
+    main: .
+    binary: karayaml
+    ldflags:
+      - -s -w -X github.com/swarupdonepudi/karayaml/cmd/karayaml/root.VersionLabel={{.Version}}
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+      - linux
+      - windows
+    goarch:
+      - amd64
+      - arm64
+
+archives:
+  - id: default
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    formats:
+      - tar.gz
+    format_overrides:
+      - goos: windows
+        formats:
+          - zip
+
+checksum:
+  name_template: "{{ .ProjectName }}_{{ .Version }}_checksums.txt"
+
+release:
+  github:
+    owner: swarupdonepudi
+    name: karayaml
+
+homebrew_casks:
+  - name: karayaml
+    repository:
+      owner: swarupdonepudi
+      name: homebrew-tap
+      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+    homepage: https://karayaml.dev
+    description: "karayaml: YAML-powered shortcut launcher for Karabiner-Elements on macOS"
+    binaries:
+      - karayaml
+    hooks:
+      post:
+        install: |
+          if OS.mac?
+            system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/karayaml"]
+          end
+    caveats: |
+      Installation Complete!
+
+      karayaml lets you define Karabiner-Elements shortcuts in simple YAML.
+
+      Quick Start
+
+      1. Create your shortcuts config:
+         mkdir -p ~/.config/karayaml
+         touch ~/.config/karayaml/shortcuts.yaml
+
+      2. Define shortcuts in YAML (example):
+         # ~/.config/karayaml/shortcuts.yaml
+         shortcuts:
+           - from: caps_lock
+             to: escape
+
+      3. Generate and apply to Karabiner:
+         karayaml apply
+
+      For more commands, run:
+         karayaml --help
+
+      Documentation: https://karayaml.dev
+
