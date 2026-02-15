@@ -1,0 +1,249 @@
+---
+description: Action rule to commit karayaml changes with appropriate conventional commit messages
+alwaysApply: false
+---
+
+# Rule: Commit KaraYaml Changes
+
+## Purpose
+
+When triggered, create a Git commit with an appropriate commit message following Conventional Commits format, based on the current conversation context and file changes.
+
+## Rule Type
+
+**Action Rule** - Executes git commit operations
+
+## When to Use
+
+- When user explicitly asks to commit changes
+- After completing a feature or fix that's ready to be committed
+- When wrapping up a development session
+
+## Commit Message Format
+
+Follow Conventional Commits format:
+
+```
+<type>(<scope>): <subject>
+
+[optional body]
+
+[optional footer]
+```
+
+### Types
+
+Use these commit types:
+- `feat`: New feature
+- `fix`: Bug fix
+- `refactor`: Code refactoring (no functional changes)
+- `docs`: Documentation only changes
+- `test`: Adding or updating tests
+- `chore`: Build process, tooling, dependencies
+- `perf`: Performance improvements
+- `style`: Code style changes (formatting, no logic changes)
+- `ci`: CI/CD changes
+- `revert`: Reverting previous commits
+
+### Scope
+
+Determine scope from the affected files/components in the karayaml repository:
+
+#### Core Commands
+- `cmd`: CLI commands and command handlers
+- `cmd/root`: Root command implementation (e.g., `cmd/karayaml/root/*.go`)
+
+#### Internal Packages
+- `internal/shortcuts`: Shortcut loading, listing, searching, filtering, display
+- `internal/karabinerconfig`: Karabiner-Elements configuration generation
+- `internal/defaulteditor`: Default editor detection
+- `internal/upgrade`: CLI self-upgrade logic
+
+#### Site
+- `site`: Landing page website
+
+#### Build & Tooling
+- `build`: Build system, Makefile, and script changes
+- `release`: GoReleaser configuration
+- `deps`: Dependency updates (`go.mod`, `go.sum`)
+
+#### Documentation
+- `docs`: Documentation changes
+- `readme`: README updates
+
+#### Cross-cutting
+- If multiple areas: Use broader scope or omit scope
+- For repo-wide changes: Use `repo` or omit scope
+
+### Subject
+
+- Use imperative mood ("add" not "added" or "adds")
+- No period at the end
+- Keep under 72 characters
+- Be specific but concise
+
+### Body (Optional)
+
+Add detailed body when:
+- The change is complex and needs explanation
+- Multiple related changes are included
+- There are breaking changes
+- Context would help future developers understand "why"
+
+Body guidelines:
+- Wrap at 72 characters
+- Explain what and why, not how
+- Use bullet points for multiple items
+- Reference issues/tickets if applicable
+
+### Footer (Optional)
+
+Include footer for:
+- `BREAKING CHANGE:` for breaking changes
+- `Closes #123` or `Fixes #123` for issue references
+- Co-authored-by for pair programming
+
+## Execution Steps
+
+1. **Analyze Changes**
+   - Check `git status` to see modified files
+   - Review the conversation context to understand what was changed
+   - Identify the type and scope of changes
+
+2. **Determine Commit Type and Scope**
+   - Map file changes to appropriate type
+   - Determine most relevant scope from file paths
+   - Consider which part(s) of karayaml are affected
+
+3. **Craft Commit Message**
+   - Write concise subject line (< 72 chars)
+   - Decide if detailed body is needed based on:
+     - Complexity of changes
+     - Number of related changes
+     - Need for future context
+   - Add footer if there are breaking changes or issue references
+
+4. **Create Commit**
+   - Stage all changes with `git add -A`
+   - Commit with the crafted message using `git commit -m "subject" [-m "body"]`
+   - Use `-m` flag multiple times for subject + body, or use multiline format
+
+## Examples
+
+### Simple Feature Addition
+
+```bash
+git commit -m "feat(cmd/root): add search alias for find command"
+```
+
+### Bug Fix with Context
+
+```bash
+git commit -m "fix(internal/shortcuts): handle empty YAML file without error" \
+  -m "The shortcut loader was returning an unmarshal error when the
+~/.kara.yaml file existed but was empty. This commit adds a check
+for empty content before attempting to parse."
+```
+
+### Command Enhancement
+
+```bash
+git commit -m "feat(cmd/root): add filter command with key and app subcommands" \
+  -m "Implement filter-key and filter-app subcommands under a new filter
+parent command. Both support fuzzy substring matching by default and
+exact matching via --exact flag."
+```
+
+### Refactoring with Multiple Files
+
+```bash
+git commit -m "refactor(internal/shortcuts): extract key classification into separate module" \
+  -m "- Move classifyKey() and sorting helpers to key_sort.go
+- Add sortShortcutsStable() for consistent display ordering
+- Update list and find functions to use new helpers
+- No functional changes to external behavior"
+```
+
+### Breaking Change
+
+```bash
+git commit -m "feat(internal/karabinerconfig)!: change shortcut key format in YAML" \
+  -m "BREAKING CHANGE: Shortcut keys in ~/.kara.yaml now use lowercase
+only. Existing configs with uppercase keys must be converted.
+
+This simplifies key validation and matching across all commands."
+```
+
+### Documentation Update
+
+```bash
+git commit -m "docs(readme): add installation instructions for Homebrew"
+```
+
+### Site Update
+
+```bash
+git commit -m "feat(site): add features comparison section to landing page"
+```
+
+### Build System
+
+```bash
+git commit -m "chore(build): update GoReleaser config to version 2 format"
+```
+
+## Command Patterns
+
+For simple commits:
+```bash
+git add -A && git commit -m "<type>(<scope>): <subject>"
+```
+
+For commits with body:
+```bash
+git add -A && git commit -m "<type>(<scope>): <subject>" -m "<body>"
+```
+
+For commits with multi-paragraph body:
+```bash
+git add -A
+git commit -m "<type>(<scope>): <subject>" \
+  -m "<paragraph 1>" \
+  -m "" \
+  -m "<paragraph 2>"
+```
+
+## Important Notes
+
+- **Always run in karayaml workspace**: `~/scm/github.com/swarupdonepudi/karayaml`
+- **Don't commit without reviewing**: Show the proposed commit message to the user before executing if the changes are significant
+- **Stage selectively if needed**: If only some changes should be committed, stage specific files instead of `git add -A`
+- **Don't skip hooks**: Never use `--no-verify` unless explicitly requested
+- **Check for unstaged changes**: Review `git status` output to ensure all intended changes are staged
+
+## Error Handling
+
+If commit fails:
+- Check if there are actually changes to commit
+- Verify you're in the correct directory
+- Check if a commit is already in progress (merge/rebase)
+- Ensure commit message format is valid
+
+## Workflow Integration
+
+This rule works well with:
+- `@generate-karayaml-pr-info` - Generate PR info before creating pull request
+- `@create-karayaml-changelog` - Create a changelog entry for the work
+- After completing a development task
+- Before creating a pull request
+
+## Execution
+
+When this rule is triggered:
+
+1. Navigate to karayaml workspace
+2. Run `git status` to check current changes
+3. Analyze changes and conversation context
+4. Propose commit message following the format above
+5. Execute the commit command with appropriate permissions (git_write)
+6. Confirm successful commit

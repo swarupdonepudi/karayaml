@@ -131,6 +131,62 @@ func Find(query string) ([]*FileOpenShortcut, error) {
 	return matches, nil
 }
 
+// FilterByKey returns shortcuts whose Key matches the query.
+// If exact is true, only exact (case-insensitive) matches are returned.
+// Otherwise, keys that contain the query as a substring are returned.
+func FilterByKey(query string, exact bool) ([]*FileOpenShortcut, error) {
+	list, err := List()
+	if err != nil {
+		return nil, err
+	}
+	q := strings.ToLower(strings.TrimSpace(query))
+	if q == "" {
+		return []*FileOpenShortcut{}, nil
+	}
+	matches := make([]*FileOpenShortcut, 0)
+	for _, s := range list {
+		k := strings.ToLower(string(s.Key))
+		if exact {
+			if k == q {
+				matches = append(matches, s)
+			}
+		} else {
+			if strings.Contains(k, q) {
+				matches = append(matches, s)
+			}
+		}
+	}
+	return matches, nil
+}
+
+// FilterByApp returns shortcuts whose File path matches the query.
+// If exact is true, only exact (case-insensitive) matches are returned.
+// Otherwise, files that contain the query as a substring are returned.
+func FilterByApp(query string, exact bool) ([]*FileOpenShortcut, error) {
+	list, err := List()
+	if err != nil {
+		return nil, err
+	}
+	q := strings.ToLower(strings.TrimSpace(query))
+	if q == "" {
+		return []*FileOpenShortcut{}, nil
+	}
+	matches := make([]*FileOpenShortcut, 0)
+	for _, s := range list {
+		f := strings.ToLower(s.File)
+		if exact {
+			if f == q {
+				matches = append(matches, s)
+			}
+		} else {
+			if strings.Contains(f, q) {
+				matches = append(matches, s)
+			}
+		}
+	}
+	return matches, nil
+}
+
 // FormatSingleMatchMessage returns a friendly sentence for a single match.
 func FormatSingleMatchMessage(s *FileOpenShortcut) string {
 	if s == nil {
