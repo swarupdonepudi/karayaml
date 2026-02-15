@@ -11,7 +11,7 @@ const faqs = [
   },
   {
     question: "Which operating systems are supported?",
-    answer: "KaraYAML works on macOS (Karabiner-Elements is macOS-only). It's not needed or available on Windows/Linux."
+    answer: "KaraYAML works on macOS only (Karabiner-Elements is macOS-only). KaraYAML is not available on Windows or Linux."
   },
   {
     question: "What keys can I use for shortcuts?",
@@ -19,19 +19,23 @@ const faqs = [
   },
   {
     question: "Can I launch things other than apps?",
-    answer: "KaraYAML is primarily for opening applications (using macOS `open`). It will launch the app if it's not open and bring it to the front if it's already running. You could open files or URLs with `--file` as well, but arbitrary shell commands or keystrokes aren’t supported in the current version."
+    answer: "KaraYAML is primarily for opening applications (using macOS `open`). KaraYAML launches the app if not already running and brings it to the front if it is. You can also open files or URLs, but arbitrary shell commands or keystrokes are not supported in the current version."
   },
   {
     question: "Will KaraYAML override my existing Karabiner config?",
-    answer: "It creates/updates the \"Complex Modifications\" rules in your default Karabiner profile. If you have other custom rules, back them up or merge them into your YAML, as KaraYAML will manage the Caps Lock hyper-layer and its shortcuts."
+    answer: "KaraYAML creates and updates the \"Complex Modifications\" rules in your default Karabiner profile. If you have other custom rules, back them up or merge them into your YAML, as KaraYAML manages the Caps Lock hyper-layer and its shortcuts."
   },
   {
     question: "Where is the YAML config stored?",
     answer: "KaraYAML keeps your shortcuts in `~/.kara.yaml` under your home directory. The Karabiner JSON config is updated in its standard location (`~/.config/karabiner/karabiner.json`), so Karabiner-Elements picks up the changes."
   },
   {
+    question: "How do I find a specific shortcut?",
+    answer: "Use `karayaml search <query>` to search by app name, `karayaml filter by-key <query>` to filter by key, or `karayaml filter by-app <query>` to filter by app path. All three support fuzzy matching by default, and filter commands accept `--exact` for exact matches."
+  },
+  {
     question: "Is KaraYAML free and open-source?",
-    answer: "Yes – it's released on GitHub under the Apache-2.0 license. You can use it freely for personal or professional purposes (contributions welcome!)."
+    answer: "Yes -- KaraYAML is released on GitHub under the Apache-2.0 license. You can use KaraYAML freely for personal or professional purposes (contributions welcome!)."
   }
 ];
 

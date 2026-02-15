@@ -3,18 +3,19 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { Moon, Sun, Github, Book, Terminal } from "lucide-react";
+import { Moon, Sun, Book, Terminal } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import GitHubStarBadge, { GitHubIcon } from "@/components/ui/GitHubStarBadge";
 
 export default function Layout({ children, currentPageName }) {
-  // Initialize from localStorage, default to dark when not set
+  // Initialize from localStorage, default to light when not set
   const [isDark, setIsDark] = useState(() => {
-    if (typeof window === 'undefined') return true;
+    if (typeof window === 'undefined') return false;
     try {
       const stored = localStorage.getItem('theme');
-      return stored ? stored === 'dark' : true;
+      return stored ? stored === 'dark' : false;
     } catch (_) {
-      return true;
+      return false;
     }
   });
   const [isScrolled, setIsScrolled] = useState(false);
@@ -121,16 +122,7 @@ export default function Layout({ children, currentPageName }) {
                 >
                   {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                 </Button>
-                <a href="https://github.com/swarupdonepudi/karayaml" target="_blank" rel="noopener noreferrer">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-text-muted hover:text-text"
-                  >
-                    <Github className="w-4 h-4 mr-2" />
-                    GitHub
-                  </Button>
-                </a>
+                <GitHubStarBadge repo="swarupdonepudi/karayaml" />
               </div>
             </div>
           </div>
@@ -150,14 +142,17 @@ export default function Layout({ children, currentPageName }) {
                 <span className="text-xl font-bold">KaraYAML</span>
               </div>
               <div className="flex items-center space-x-6 text-sm text-text-muted">
-                <a href="#" className="hover:text-text transition-colors">GitHub</a>
-                <a href="#" className="hover:text-text transition-colors">CLI Reference</a>
-                <a href="#" className="hover:text-text transition-colors">Examples</a>
-                <a href="#" className="hover:text-text transition-colors">License (Apache-2.0)</a>
+                <a href="https://github.com/swarupdonepudi/karayaml" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 hover:text-text transition-colors">
+                  <GitHubIcon className="w-4 h-4" />
+                  GitHub
+                </a>
+                <button onClick={() => scrollToSection('cli')} className="hover:text-text transition-colors">CLI Reference</button>
+                <button onClick={() => scrollToSection('examples')} className="hover:text-text transition-colors">Examples</button>
+                <a href="https://github.com/swarupdonepudi/karayaml/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" className="hover:text-text transition-colors">License (Apache-2.0)</a>
               </div>
             </div>
             <div className="text-center text-sm text-text-muted mt-8 pt-8 border-t border-border">
-              © 2025 Swarup Donepudi. All rights reserved.
+              © 2026 Swarup Donepudi. All rights reserved.
             </div>
           </div>
         </footer>

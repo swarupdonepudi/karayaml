@@ -12,8 +12,10 @@ export default function Quickstart() {
 #    – or –
 karayaml map a /Applications/Slack.app`;
 
-  const findReloadCode = `karayaml find slack         # search mappings by app name (case-insensitive)
-karayaml reload             # reapply ~/.kara.yaml and refresh Karabiner`;
+  const findReloadCode = `karayaml search slack              # search by app name (alias for find)
+karayaml filter by-key f           # filter shortcuts whose key contains "f"
+karayaml filter by-app chrome      # filter shortcuts whose path contains "chrome"
+karayaml reload                    # reapply ~/.kara.yaml and refresh Karabiner`;
 
   return (
     <section id="quickstart" className="max-w-7xl mx-auto px-6 py-32">
@@ -92,7 +94,7 @@ karayaml reload             # reapply ~/.kara.yaml and refresh Karabiner`;
             <div className="w-10 h-10 rounded-full bg-gradient-to-r from-primary to-secondary flex items-center justify-center text-white font-bold text-lg">
               4
             </div>
-            <h3 className="text-2xl font-bold">Search & reload</h3>
+            <h3 className="text-2xl font-bold">Search, filter & reload</h3>
           </div>
           <CodeBlock code={findReloadCode} />
         </motion.div>

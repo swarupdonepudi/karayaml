@@ -19,16 +19,28 @@ const commands = [
     description: "map a key to an app (shortcut mapping)"
   },
   {
-    command: "karayaml list",
+    command: "karayaml list  (alias: ls)",
     description: "list all configured shortcuts in a table"
   },
   {
-    command: "karayaml find <query>",
+    command: "karayaml find <query>  (alias: search)",
     description: "search shortcuts for apps whose name contains the query (case-insensitive)"
+  },
+  {
+    command: "karayaml filter by-key <query> [--exact]",
+    description: "filter shortcuts by key (fuzzy substring match by default, exact with --exact)"
+  },
+  {
+    command: "karayaml filter by-app <query> [--exact]",
+    description: "filter shortcuts by app/file path (fuzzy substring match by default, exact with --exact). Alias: by-file"
   },
   {
     command: "karayaml reload",
     description: "reload ~/.kara.yaml into Karabiner and refresh the app"
+  },
+  {
+    command: "karayaml upgrade",
+    description: "upgrade KaraYAML CLI to the latest version"
   },
   {
     command: "karayaml version",
@@ -37,16 +49,27 @@ const commands = [
 ];
 
 const flags = [
+  {
+    flag: "--exact",
+    description: "use with filter by-key or filter by-app to require an exact match instead of fuzzy substring matching"
+  },
+  {
+    flag: "--debug",
+    description: "enable debug output (available on all commands)"
+  }
 ];
 
 export default function CLIReference() {
-  const codeExample = `karayaml init           # one-time setup (creates default Karabiner config if needed)
-karayaml edit           # open the shortcuts YAML in your editor (validates on save)
-karayaml map <key> <path_to_app>   # map a key to an app
-karayaml list           # list all configured shortcuts in a table
-karayaml find <query>   # search mappings by app name (case-insensitive)
-karayaml reload         # reload ~/.kara.yaml into Karabiner and refresh
-karayaml version        # show KaraYAML CLI version`;
+  const codeExample = `karayaml init                          # one-time setup
+karayaml edit                          # open ~/.kara.yaml in your editor
+karayaml map <key> <path_to_app>       # map a key to an app
+karayaml list                          # list all shortcuts (alias: ls)
+karayaml find <query>                  # search by app name (alias: search)
+karayaml filter by-key <query>         # filter by key (fuzzy, or --exact)
+karayaml filter by-app <query>         # filter by app path (alias: by-file)
+karayaml reload                        # reload config into Karabiner
+karayaml upgrade                       # upgrade to latest version
+karayaml version                       # show CLI version`;
 
   return (
     <section id="cli" className="max-w-7xl mx-auto px-6 py-32">

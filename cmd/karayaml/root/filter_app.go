@@ -11,8 +11,9 @@ import (
 var filterAppExact bool
 
 var FilterApp = &cobra.Command{
-	Use:   "filter-app <query>",
-	Short: "filter shortcuts by app/file path (fuzzy substring match by default, use --exact for exact match)",
+	Use:     "by-app <query>",
+	Aliases: []string{"by-file"},
+	Short:   "filter shortcuts by app/file path (fuzzy substring match by default, use --exact for exact match)",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		query := args[0]

@@ -2,7 +2,8 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Copy, Check, Github, Terminal, Zap } from "lucide-react";
+import { Copy, Check, Terminal, Zap } from "lucide-react";
+import { GitHubIcon } from "@/components/ui/GitHubStarBadge";
 import { motion } from "framer-motion";
 import HeroVisual from "./HeroVisual";
 
@@ -120,7 +121,7 @@ export default function Hero() {
             className="flex justify-center gap-6 text-text-muted"
           >
             <a href="https://github.com/swarupdonepudi/karayaml" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-text transition-colors">
-              <Github className="w-4 h-4" />
+              <GitHubIcon className="w-4 h-4" />
               View on GitHub
             </a>
           </motion.div>

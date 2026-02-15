@@ -19,7 +19,7 @@ const features = [
   {
     icon: Terminal,
     title: "CLI-first workflow",
-    description: "Initialize, edit, add, or list shortcuts entirely from the command line – no clunky UI, just code.",
+    description: "Initialize, edit, map, list, search, and filter shortcuts entirely from the command line -- no clunky UI, just code.",
     gradient: "from-purple-500 to-purple-600"
   },
   {
@@ -31,7 +31,7 @@ const features = [
   {
     icon: Package,
     title: "Lightweight & no deps",
-    description: "A simple Go CLI (no runtime dependencies). Install via Homebrew and use it on any Mac with Karabiner.",
+    description: "A simple Go CLI (no runtime dependencies). Install via Homebrew and use KaraYAML on any Mac with Karabiner.",
     gradient: "from-pink-500 to-pink-600"
   }
 ];

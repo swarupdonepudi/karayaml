@@ -11,7 +11,7 @@ import (
 var filterKeyExact bool
 
 var FilterKey = &cobra.Command{
-	Use:   "filter-key <query>",
+	Use:   "by-key <query>",
 	Short: "filter shortcuts by key (fuzzy substring match by default, use --exact for exact match)",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {

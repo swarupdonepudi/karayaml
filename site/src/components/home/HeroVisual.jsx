@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Command } from "lucide-react";
 
 const Key = ({ children, className = "" }) => (
-  <div className={`flex items-center justify-center w-16 h-16 bg-surface border border-border rounded-lg shadow-sm font-mono text-lg ${className}`}>
+  <div className={`flex items-center justify-center w-16 h-16 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg shadow-sm font-mono text-lg text-slate-800 dark:text-slate-100 ${className}`}>
     {children}
   </div>
 );
@@ -11,7 +11,7 @@ const Key = ({ children, className = "" }) => (
 const AppIcon = ({ icon: Icon, imageSrc, appName, showLabelOnHover = true }) => (
   <div className="relative flex flex-col items-center group">
     <div
-      className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary/10 to-secondary/10 border border-border rounded-xl shadow-lg"
+      className="flex items-center justify-center w-16 h-16 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-xl shadow-lg"
       title={appName}
       aria-label={appName}
     >
