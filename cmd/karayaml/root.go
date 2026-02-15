@@ -43,6 +43,7 @@ func init() {
 		root.Reload,
 		root.Find,
 		root.List,
+		root.Filter,
 		root.Upgrade,
 		root.Version,
 	)

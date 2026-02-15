@@ -8,8 +8,9 @@ import (
 )
 
 var Find = &cobra.Command{
-	Use:   "find <query>",
-	Short: "search ~/.kara.yaml for apps whose name contains the query (case-insensitive)",
+	Use:     "find <query>",
+	Aliases: []string{"search"},
+	Short:   "search ~/.kara.yaml for apps whose name contains the query (case-insensitive)",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		query := args[0]
