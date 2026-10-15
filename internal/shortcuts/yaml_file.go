@@ -27,8 +27,6 @@ func editYaml() error {
 		}
 	}
 	for {
-		duplicates := make([]string, 0)
-
 		cmd := defaulteditor.NewEditorCommand(configFile)
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
@@ -41,27 +39,13 @@ func editYaml() error {
 		if err != nil {
 			return errors.Wrapf(err, "failed to list shortcuts")
 		}
-		duplicates = getDuplicates(appShortcuts)
-		if len(duplicates) == 0 {
+		errs := Validate(appShortcuts)
+		if len(errs) == 0 {
 			break
-		} else {
-			fmt.Fprintf(os.Stderr, "fix %v keys which may have either empty or duplicate shortcut mappings\n", duplicates)
 		}
+		fmt.Fprintf(os.Stderr, "fix these shortcuts:\n%s\n", formatErrors(errs))
 	}
 	return nil
-}
-
-// getDuplicates iterates through the shortcuts and considers shortcuts that have empty app name to be a duplicate entry.
-// note: the value could also be left empty intentionally.
-func getDuplicates(shortcuts []*FileOpenShortcut) []string {
-	duplicates := make([]string, 0)
-	for _, s := range shortcuts {
-		if s.File != "" {
-			continue
-		}
-		duplicates = append(duplicates, string(s.Key))
-	}
-	return duplicates
 }
 
 // Write writes provided shortcuts to shortcuts config file
