@@ -44,27 +44,27 @@ func PrintList(shortcuts []*FileOpenShortcut) {
 	if len(functionKeys) > 0 {
 		rows := make([]table.Row, 0, len(functionKeys))
 		for _, s := range functionKeys {
-			rows = append(rows, table.Row{s.Key, s.File})
+			rows = append(rows, table.Row{s.Key, s.Target()})
 		}
 		printTableWithTitle("Function Keys", rows)
 	}
 	if len(numbers) > 0 {
 		rows := make([]table.Row, 0, len(numbers))
 		for _, s := range numbers {
-			rows = append(rows, table.Row{s.Key, s.File})
+			rows = append(rows, table.Row{s.Key, s.Target()})
 		}
 		printTableWithTitle("Numbers", rows)
 	}
 	if len(letters) > 0 {
 		rows := make([]table.Row, 0, len(letters))
 		for _, s := range letters {
-			rows = append(rows, table.Row{s.Key, s.File})
+			rows = append(rows, table.Row{s.Key, s.Target()})
 		}
 		printTableWithTitle("Letters", rows)
 	}
 }
 
-// PrintMatches prints a flat table of the provided shortcuts (key and file),
+// PrintMatches prints a flat table of the provided shortcuts (key and target),
 // preserving stable ordering for readability.
 func PrintMatches(matches []*FileOpenShortcut) {
 	if len(matches) == 0 {
@@ -76,7 +76,7 @@ func PrintMatches(matches []*FileOpenShortcut) {
 
 	rows := make([]table.Row, 0, len(ordered))
 	for _, s := range ordered {
-		rows = append(rows, table.Row{s.Key, s.File})
+		rows = append(rows, table.Row{s.Key, s.Target()})
 	}
 	printTableWithTitle("Matches", rows)
 }
@@ -111,7 +111,7 @@ func getDefaultTableWriter(header table.Row, rows []table.Row) table.Writer {
 	return t
 }
 
-// Find returns all shortcuts where the file name contains the query
+// Find returns all shortcuts where the file name or url contains the query
 // (case-insensitive). It does not mutate ordering.
 func Find(query string) ([]*FileOpenShortcut, error) {
 	list, err := List()
@@ -124,7 +124,7 @@ func Find(query string) ([]*FileOpenShortcut, error) {
 	}
 	matches := make([]*FileOpenShortcut, 0)
 	for _, s := range list {
-		if strings.Contains(strings.ToLower(s.File), q) {
+		if strings.Contains(strings.ToLower(s.File), q) || strings.Contains(strings.ToLower(s.URL), q) {
 			matches = append(matches, s)
 		}
 	}
@@ -159,7 +159,7 @@ func FilterByKey(query string, exact bool) ([]*FileOpenShortcut, error) {
 	return matches, nil
 }
 
-// FilterByApp returns shortcuts whose File path matches the query.
+// FilterByApp returns shortcuts whose File path matches the query; url entries never match.
 // If exact is true, only exact (case-insensitive) matches are returned.
 // Otherwise, files that contain the query as a substring are returned.
 func FilterByApp(query string, exact bool) ([]*FileOpenShortcut, error) {
@@ -192,7 +192,7 @@ func FormatSingleMatchMessage(s *FileOpenShortcut) string {
 	if s == nil {
 		return ""
 	}
-	return fmt.Sprintf("Yeah, I found one match: key '%s' is mapped to '%s'", s.Key, s.File)
+	return fmt.Sprintf("Yeah, I found one match: key '%s' is mapped to '%s'", s.Key, s.Target())
 }
 
 // FormatMultiMatchMessage returns a header sentence for multiple matches.

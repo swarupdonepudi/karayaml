@@ -19,7 +19,7 @@ const faqs = [
   },
   {
     question: "Can I launch things other than apps?",
-    answer: "KaraYAML is primarily for opening applications (using macOS `open`). KaraYAML launches the app if not already running and brings it to the front if it is. You can also open files or URLs, but arbitrary shell commands or keystrokes are not supported in the current version."
+    answer: "Yes, URLs. An entry with `file:` opens an app (using macOS `open -a`), launching it if not already running and bringing it to the front if it is. An entry with `url:` instead opens a link with macOS `open`, so `https://…` opens in your default browser and a scheme such as `slack://…` opens the app that owns it. Arbitrary shell commands or keystrokes are not supported in the current version."
   },
   {
     question: "Will KaraYAML override my existing Karabiner config?",

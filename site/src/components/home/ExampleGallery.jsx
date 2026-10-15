@@ -6,11 +6,14 @@ export default function ExampleGallery() {
   const yamlExample = `- key: a                  # press Caps Lock + A to launch Slack
   file: /Applications/Slack.app
 - key: 1                  # press Caps Lock + 1 to open Calendar
-  file: /System/Applications/Calendar.app`;
+  file: /System/Applications/Calendar.app
+- key: g                  # press Caps Lock + G to open GitHub
+  url: https://github.com`;
 
   const deployExample = `karayaml init                                  # ensure Karabiner config exists
 karayaml map a /Applications/Slack.app       # add Slack launcher
-karayaml map 1 /System/Applications/Calendar.app  # add Calendar launcher`;
+karayaml map 1 /System/Applications/Calendar.app  # add Calendar launcher
+karayaml map g https://github.com            # add a link`;
 
   return (
     <section id="examples" className="bg-surface py-32">
@@ -31,7 +34,7 @@ karayaml map 1 /System/Applications/Calendar.app  # add Calendar launcher`;
             transition={{ delay: 0.1 }}
             className="text-xl text-text-muted max-w-3xl mx-auto"
           >
-            Real example from KaraYAML's repo – two shortcuts to launch Slack and Calendar. Replace paths as needed for your apps.
+            Real example from KaraYAML's repo – shortcuts to launch Slack and Calendar and to open GitHub. Replace paths and links as needed.
           </motion.p>
         </div>
 

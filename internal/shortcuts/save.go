@@ -4,12 +4,17 @@ import (
 	"fmt"
 	"github.com/pkg/errors"
 	"github.com/swarupdonepudi/karayaml/internal/karabinerconfig"
+	"os"
 	"os/exec"
 )
 
-// save adds provided list of shortcuts to karabiner config
+// save adds provided list of shortcuts to karabiner config. It refuses to write while
+// any shortcut is invalid, naming every one, and skips entries with neither file nor url.
 func save(shortcuts []*FileOpenShortcut) error {
-	shortcutMap := convertToMap(shortcuts)
+	if errs := Validate(shortcuts); len(errs) > 0 {
+		return errors.Errorf("fix these shortcuts in ~/%s:\n%s", FileName, formatErrors(errs))
+	}
+	shortcutMap := convertToMap(withTargets(shortcuts))
 
 	c, err := karabinerconfig.GetDefault()
 	if err != nil {
@@ -25,7 +30,7 @@ func save(shortcuts []*FileOpenShortcut) error {
 
 	for _, s := range shortcutMap {
 		rules = append(rules, &karabinerconfig.ComplexModRule{
-			Description: fmt.Sprintf("open %s app", s.File),
+			Description: fmt.Sprintf("open %s", s.Target()),
 			Manipulators: []*karabinerconfig.ComplexModRuleManipulator{
 				{
 					From: &karabinerconfig.ComplexModRuleManipulatorFrom{
@@ -36,7 +41,7 @@ func save(shortcuts []*FileOpenShortcut) error {
 					},
 					To: []*karabinerconfig.ComplexModRuleManipulatorTo{
 						{
-							ShellCommand: fmt.Sprintf("open -a '%s'", s.File),
+							ShellCommand: s.ShellCommand(),
 						},
 					},
 					Type: karabinerconfig.ComplexModRuleManipulatorTypeBasic,
@@ -66,6 +71,20 @@ func Reload() error {
 	// Best-effort nudge to Karabiner-Elements to ensure the new config is active
 	_ = exec.Command("osascript", "-e", "tell application \"Karabiner-Elements\" to activate").Run()
 	return nil
+}
+
+// withTargets returns the shortcuts that open something, warning about each entry
+// left with neither file nor url, so a placeholder key never becomes `open -a ”`.
+func withTargets(shortcuts []*FileOpenShortcut) []*FileOpenShortcut {
+	kept := make([]*FileOpenShortcut, 0, len(shortcuts))
+	for _, s := range shortcuts {
+		if s.Target() == "" {
+			fmt.Fprintf(os.Stderr, "warning: key '%s' has neither file nor url; skipped\n", s.Key)
+			continue
+		}
+		kept = append(kept, s)
+	}
+	return kept
 }
 
 // convertToMap converts the provided shortcuts into a map keyed by KeyBoardKey.

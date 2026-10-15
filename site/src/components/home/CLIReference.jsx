@@ -15,8 +15,8 @@ const commands = [
     description: "open the shortcuts YAML in your editor (validates on save)"
   },
   {
-    command: "karayaml map <key> <path_to_app>",
-    description: "map a key to an app (shortcut mapping)"
+    command: "karayaml map <key> <app-or-url>",
+    description: "map a key to an app, or to a URL such as https://github.com (anything with ://)"
   },
   {
     command: "karayaml list  (alias: ls)",
@@ -62,7 +62,7 @@ const flags = [
 export default function CLIReference() {
   const codeExample = `karayaml init                          # one-time setup
 karayaml edit                          # open ~/.kara.yaml in your editor
-karayaml map <key> <path_to_app>       # map a key to an app
+karayaml map <key> <app-or-url>        # map a key to an app or a URL
 karayaml list                          # list all shortcuts (alias: ls)
 karayaml find <query>                  # search by app name (alias: search)
 karayaml filter by-key <query>         # filter by key (fuzzy, or --exact)
